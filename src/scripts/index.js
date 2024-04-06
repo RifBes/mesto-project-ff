@@ -7,7 +7,7 @@ import { openModal, closeModal } from '../components/modal';
 const cardsList = document.querySelector('.places__list');
 
 initialCards.forEach((card) => {
-    let newCard = createCard(card, deleteCard, likeCard, openCard);
+    const newCard = createCard(card, deleteCard, likeCard, openCard);
     addCard(cardsList, newCard);
 });
 
