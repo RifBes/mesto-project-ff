@@ -11,8 +11,6 @@ initialCards.forEach((card) => {
     addCard(cardsList, newCard);
 });
 
-//открытие фотографий
-
 //редактирование профиля
 const buttonProfile = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit');
