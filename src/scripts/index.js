@@ -1,14 +1,23 @@
 import '../pages/index.css';
 
-import { createCard, addCard, deleteCard, likeCard } from '../components/card';
+import {
+    createCard,
+    addInitCard,
+    deleteCard,
+    likeCard,
+} from '../components/card';
 import { initialCards } from '../components/cards';
-import { openModal, closeModal } from '../components/modal';
+import {
+    openModal,
+    closeModal,
+    closePopupOverlayAndButton,
+} from '../components/modal';
 
 const cardsList = document.querySelector('.places__list');
 
 initialCards.forEach((card) => {
     const newCard = createCard(card, deleteCard, likeCard, openCard);
-    addCard(cardsList, newCard);
+    addInitCard(cardsList, newCard);
 });
 
 //редактирование профиля
@@ -21,7 +30,7 @@ const editProfile = (e) => {
         document.forms['edit-profile'].elements.name.value;
     document.querySelector('.profile__description').textContent =
         document.forms['edit-profile'].elements.description.value;
-    e.target.closest('form').reset();
+    e.target.reset();
     closeModal(popupEdit);
 };
 
@@ -43,12 +52,12 @@ buttonAdd.addEventListener('click', () => {
 
 const addPlace = (e) => {
     e.preventDefault();
-    const new_card = {
+    const newCard = {
         name: cardName.value,
         link: cardImage.value,
     };
-    cardsList['prepend'](createCard(new_card, deleteCard));
-    e.target.closest('form').reset();
+    cardsList.prepend(createCard(newCard, deleteCard, likeCard, openCard));
+    e.target.reset();
     closeModal(popupNewCard);
 };
 
@@ -74,16 +83,6 @@ function openCard(e) {
 
 //закрытие форм
 const allPopup = document.querySelectorAll('.popup');
-
 allPopup.forEach((popup) => {
-    popup.addEventListener('mousedown', (e) => {
-        //крестик
-        if (e.target.classList.contains('popup__close')) {
-            closeModal(popup);
-        }
-        //вне окна
-        if (e.target.classList.contains('popup_is-opened')) {
-            closeModal(popup);
-        }
-    });
+    popup.addEventListener('mousedown', closePopupOverlayAndButton);
 });

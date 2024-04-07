@@ -11,8 +11,15 @@ export const closeModal = (modal) => {
 export const closeEsc = (e) => {
     if (e.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_is-opened');
-        if (openedPopup) {
-            closeModal(openedPopup);
-        }
+        closeModal(openedPopup);
+    }
+};
+
+export const closePopupOverlayAndButton = (e) => {
+    if (
+        e.target.classList.contains('popup_is-opened') ||
+        e.target.classList.contains('popup__close')
+    ) {
+        closeModal(e.currentTarget);
     }
 };
