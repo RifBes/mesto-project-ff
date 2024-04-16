@@ -29,3 +29,8 @@
     opacity: 1;
     visibility: visible;
 }
+
+.popup_error {
+    color: rgb(255, 0, 0);
+    font-size: 12px;
+}
