@@ -143,9 +143,6 @@ const addPlace = async (e) => {
         })
         .catch((err) => {
             console.log(err);
-        })
-        .finally(() => {
-            //renderLoading(false, popupCardForm.querySelector('.popup__button'));
         });
 };
 

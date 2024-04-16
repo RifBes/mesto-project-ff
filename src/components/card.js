@@ -24,7 +24,7 @@ export const likeCard = (e, id) => {
     }
 };
 
-export const createCard = (cardInfo, userID, deleted, open, like) => {
+export const createCard = (cardInfo, myID, deleted, open, like) => {
     const card = document
         .querySelector('#card-template')
         .content.cloneNode(true);
@@ -43,7 +43,7 @@ export const createCard = (cardInfo, userID, deleted, open, like) => {
     const cardLikeCount = card.querySelector('.card__like-count');
     const cardLikeButton = card.querySelector('.card__like-button');
     cardLikeCount.textContent = cardInfo.likes.length;
-    const isLiked = cardInfo.likes.some((like) => like._id === userID);
+    const isLiked = cardInfo.likes.some((like) => like._id === myID);
     if (isLiked) {
         cardLikeButton.classList.add('element__like_active');
     }
@@ -52,12 +52,7 @@ export const createCard = (cardInfo, userID, deleted, open, like) => {
     });
 
     //удаление
-    // card.querySelector('.card__delete-button').addEventListener(
-    //     'click',
-    //     deleted
-    // );
-
-    if (userID !== cardInfo.owner._id) {
+    if (myID !== cardInfo.owner._id) {
         card.querySelector('.card__delete-button').remove();
     } else {
         card.querySelector('.card__delete-button').addEventListener(
@@ -73,10 +68,6 @@ export const createCard = (cardInfo, userID, deleted, open, like) => {
 };
 
 export const addInitCard = (gallery, card) => gallery.append(card);
-
-// export const deleteCard = (e) => {
-//     // e.target.closest('.card').remove();
-// };
 
 export const renderNewCard = (
     card,

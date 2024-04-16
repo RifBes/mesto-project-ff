@@ -1,20 +1,20 @@
 const showInputError = (
     formElement,
     inputElement,
-    errorMessage,
+    errorText,
     validationsComponents
 ) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElem = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(validationsComponents.inputErrorClass);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(validationsComponents.errorClass);
+    errorElem.textContent = errorText;
+    errorElem.classList.add(validationsComponents.errorClass);
 };
 
 const hideInputError = (formElement, inputElement, validationsComponents) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    const errorElem = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(validationsComponents.inputErrorClass);
-    errorElement.classList.remove(validationsComponents.errorClass);
-    errorElement.textContent = '';
+    errorElem.classList.remove(validationsComponents.errorClass);
+    errorElem.textContent = '';
 };
 
 const hasInvalidInput = (inputList) => {
@@ -35,7 +35,7 @@ const toggleButton = (inputList, button, validationsComponents) => {
 
 const checkInputValidity = (form, inputElement, validationsComponents) => {
     if (inputElement.validity.patternMismatch) {
-        inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+        inputElement.setCustomValidity(inputElement.dataset.errorText);
     } else {
         inputElement.setCustomValidity('');
     }
