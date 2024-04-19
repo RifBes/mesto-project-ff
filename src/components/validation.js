@@ -92,6 +92,7 @@ export const clearValidation = (profileForm, validationsComponents) => {
     inputList.forEach((inputElement) => {
         hideInputError(profileForm, inputElement, validationsComponents);
     });
-
+    //форма передаётся в profileForm
+    profileForm.reset();
     toggleButton(inputList, buttonElement, validationsComponents);
 };

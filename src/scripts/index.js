@@ -16,7 +16,7 @@ import {
     сhangeUserInfo,
     changeAvatarRequest,
     getAllInfo,
-    AddNewCard,
+    addNewCard,
     deleteCardApi,
 } from '../components/api.js';
 
@@ -92,7 +92,6 @@ const editProfile = (e) => {
     profileDesc.textContent =
         document.forms['edit-profile'].elements.description.value;
 
-    e.target.reset();
     closeModal(popupEdit);
 };
 
@@ -118,7 +117,6 @@ const cardImage = popupNewCard.querySelector('.popup__input_type_url');
 
 buttonAdd.addEventListener('click', () => {
     const newCardForm = document.forms['new-place'];
-    newCardForm.reset();
     clearValidation(newCardForm, validationsComponents);
     openModal(popupNewCard);
 });
@@ -129,7 +127,7 @@ const addPlace = async (e) => {
         name: cardName.value,
         link: cardImage.value,
     };
-    AddNewCard(newCard.name, newCard.link)
+    addNewCard(newCard.name, newCard.link)
         .then((newCard) => {
             renderNewCard(
                 newCard,
@@ -170,7 +168,7 @@ function openCard(e) {
 const changeAvatarClick = document.querySelector('.profile__image');
 const changeAvatarModal = document.querySelector('.popup_type_changeAvatar');
 const formProfileImg = document.forms['new-avatar'];
-const formProfileImg_button = formProfileImg.querySelector('.popup__button');
+const formProfileImgButton = formProfileImg.querySelector('.popup__button');
 const profileImg = document.querySelector('.profile__image');
 
 changeAvatarClick.addEventListener('click', () => {
@@ -181,19 +179,18 @@ changeAvatarClick.addEventListener('click', () => {
 const changeAvatar = (e) => {
     e.preventDefault();
 
-    const buttonText = formProfileImg_button.textContent;
-    formProfileImg_button.textContent = 'Сохранение...';
+    const buttonText = formProfileImgButton.textContent;
+    formProfileImgButton.textContent = 'Сохранение...';
 
     changeAvatarRequest(formProfileImg.link.value)
         .then((profile) => {
             profileImg.style.backgroundImage = `url(${profile.avatar})`;
-            e.target.reset();
             closeModal(changeAvatarModal);
         })
         .catch((err) => {
             console.log(err);
         })
-        .finally(() => (formProfileImg_button.textContent = buttonText));
+        .finally(() => (formProfileImgButton.textContent = buttonText));
 };
 
 formProfileImg.addEventListener('submit', changeAvatar);
@@ -207,14 +204,13 @@ allPopup.forEach((popup) => {
 enableValidation(validationsComponents);
 
 getAllInfo()
-    .then((res) => {
+    .then(([profile, cards]) => {
         //сначала профиль, потом карточки
-        console.log(res);
-        profileTitle.textContent = res[0].name;
-        profileDesc.textContent = res[0].about;
-        profileImg.style.backgroundImage = `url(${res[0].avatar})`;
-        myID = res[0]._id;
-        initCard(res[1]);
+        profileTitle.textContent = profile.name;
+        profileDesc.textContent = profile.about;
+        profileImg.style.backgroundImage = `url(${profile.avatar})`;
+        myID = profile._id;
+        initCard(cards);
     })
     .catch((err) => {
         console.log(err);

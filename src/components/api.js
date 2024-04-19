@@ -43,7 +43,7 @@ export const loadImg = async () => {
     }).then((res) => getResponse(res));
 };
 
-export const AddNewCard = async (name, link) => {
+export const addNewCard = async (name, link) => {
     return fetch(config.baseUrl + '/cards', {
         method: 'POST',
         headers: config.headers,

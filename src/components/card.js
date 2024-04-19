@@ -3,25 +3,17 @@ import { deleteLike, makeLike } from './api';
 export const likeCard = (e, id) => {
     const actualLikes = e.target.parentNode.querySelector('.card__like-count');
 
-    if (e.target.classList.contains('card__like-button_is-active')) {
-        deleteLike(id)
-            .then((updatedCard) => {
-                e.target.classList.remove('card__like-button_is-active');
-                actualLikes.textContent = updatedCard.likes.length;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    } else {
-        makeLike(id)
-            .then((updatedCard) => {
-                e.target.classList.add('card__like-button_is-active');
-                actualLikes.textContent = updatedCard.likes.length;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
+    const likeMethod = e.target.classList.contains(
+        'card__like-button_is-active'
+    )
+        ? deleteLike
+        : makeLike;
+    likeMethod(id)
+        .then((updatedCard) => {
+            e.target.classList.toggle('card__like-button_is-active');
+            actualLikes.textContent = updatedCard.likes.length;
+        })
+        .catch((err) => console.log(err));
 };
 
 export const createCard = (cardInfo, myID, deleted, open, like) => {
@@ -45,7 +37,7 @@ export const createCard = (cardInfo, myID, deleted, open, like) => {
     cardLikeCount.textContent = cardInfo.likes.length;
     const isLiked = cardInfo.likes.some((like) => like._id === myID);
     if (isLiked) {
-        cardLikeButton.classList.add('element__like_active');
+        cardLikeButton.classList.add('card__like-button_is-active');
     }
     card.querySelector('.card__like-button').addEventListener('click', (e) => {
         like(e, cardInfo._id);
